@@ -23,26 +23,26 @@ public class DriverManagement {
         if (driver == null) {
             String browserName = PropertiesReader.get("browser");
             switch (PropertiesReader.get("browser")) {
-                case "chrome" -> {
+                case "chrome":
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--disable-notifications");
                     driver = new ChromeDriver(chromeOptions);
-                }
-                case "edge" -> {
+                    break;
+                case "edge":
                     WebDriverManager.edgedriver().setup();
                     EdgeOptions edgeOptions = new EdgeOptions();
                     edgeOptions.addArguments("--disable-notifications");
                     driver = new EdgeDriver(edgeOptions);
-                }
-                case "firefox" -> {
+                    break;
+                case "firefox":
                     WebDriverManager.firefoxdriver().setup();
                     FirefoxOptions firefoxOptions = new FirefoxOptions();
                     firefoxOptions.addPreference("dom.webnotifications.enabled", false);
                     driver = new FirefoxDriver(firefoxOptions);
-                }
-                default ->
-                        throw new IllegalArgumentException("Invalid browser name in properties file: " + browserName);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid browser name in properties file: " + browserName);
             }
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));

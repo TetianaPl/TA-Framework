@@ -10,12 +10,17 @@ public class ReadResult {
             JavascriptExecutor jsExec = (JavascriptExecutor) driver;
             jsExec.executeScript("arguments[0].scrollIntoView(false);", driver.findElement(By.xpath("//h3[text()='Total Estimated Monthly Cost']")));
         }
-        String result = switch (source) {
-            case "calculatorForm" ->
-                    driver.findElement(By.xpath("//*[@id='resultBlock']//b[contains(text(), 'Total Estimated Cost:')]")).getText();
-            case "email" -> driver.findElement(By.xpath("//h2[contains(text(), 'Estimated Monthly Cost:')]")).getText();
-            default -> "";
-        };
+        String result;
+        switch (source) {
+            case "calculatorForm":
+                result = driver.findElement(By.xpath("//*[@id='resultBlock']//b[contains(text(), 'Total Estimated Cost:')]")).getText();
+                break;
+            case "email":
+                result = driver.findElement(By.xpath("//h2[contains(text(), 'Estimated Monthly Cost:')]")).getText();
+                break;
+            default:
+                result = "";
+        }
         return Double.parseDouble(result.split(" USD ")[1].
                 split(" per")[0].
                 replaceAll(",", ""));
