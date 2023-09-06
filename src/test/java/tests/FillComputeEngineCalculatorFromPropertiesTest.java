@@ -21,7 +21,7 @@ public class FillComputeEngineCalculatorFromPropertiesTest extends TestSetup {
         computeEngineCalculatorPage.setMachineType(getTestData("machineType"));
         if (Boolean.parseBoolean(getTestData("addGPUs"))) {
             computeEngineCalculatorPage.setAddGPUs(true);
-            computeEngineCalculatorPage.setCPUType(getTestData("CPUType"));
+            computeEngineCalculatorPage.setGPUType(getTestData("CPUType"));
             computeEngineCalculatorPage.setNumberOfGPUs(Integer.parseInt(getTestData("numberOfGPUs")));
         }
         computeEngineCalculatorPage.setLocalSSD(getTestData("localSSD"));

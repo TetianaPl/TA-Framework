@@ -26,7 +26,7 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
     @FindBy(xpath = "(//md-checkbox[@aria-label='Add GPUs'])[1]")
     private WebElement addGPUs;
     @FindBy(xpath = "//md-select[@placeholder='GPU type']")
-    private WebElement CPUType;
+    private WebElement GPUType;
     @FindBy(xpath = "//md-select[@placeholder='Number of GPUs']")
     private WebElement numberOfGPUs;
     @FindBy(xpath = "(//md-select[@placeholder='Local SSD'])[1]")
@@ -68,8 +68,8 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
         return Boolean.parseBoolean(addGPUs.getAttribute("aria-checked"));
     }
 
-    public String getCPUType() {
-        return CPUType.getText();
+    public String getGPUType() {
+        return GPUType.getText();
     }
 
     public int getNumberOfGPUs() {
@@ -138,15 +138,16 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
         }
     }
 
-    public void setCPUType(String type) {
+    public void setGPUType(String type) {
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;
-        jsExec.executeScript("arguments[0].click();", CPUType);
+        jsExec.executeScript("arguments[0].click();", GPUType);
         selectItem(driver, type);
-        logger.trace("CPU type: " + type + ".");
+        logger.trace("GPU type: " + type + ".");
     }
 
     public void setNumberOfGPUs(int number) {
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;
+        jsExec.executeScript("arguments[0].click();", numberOfGPUs);
         WebElement element = numberOfGPUs.findElement(By.xpath("//md-option[@ng-repeat='item in listingCtrl.supportedGpuNumbers[listingCtrl.computeServer.gpuType]'][@value = '" + number + "']"));
         highlightElement(driver, element);
         jsExec.executeScript("arguments[0].click();", element);
