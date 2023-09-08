@@ -27,12 +27,12 @@ public class CloudGooglePage extends PageModel {
         searchField.sendKeys(searchQuery);
         Actions actions = new Actions(driver);
         actions.keyDown(Keys.ENTER).click().build().perform();
-        logger.trace("Search  by " + searchQuery + " started.");
+        logger.info("Search  by " + searchQuery + " started.");
     }
 
     public void findInSearchResults(String text) {
         WebElement element = searchResults.findElement(By.xpath("//div[@class='gsc-thumbnail-inside']//a[@class='gs-title']/b[text()= '" + text + "']"));
-        logger.trace("Followed the link found: " + element.getText());
+        logger.info("Followed the link found: " + element.getText());
         highlightElement(driver, element);
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", element);

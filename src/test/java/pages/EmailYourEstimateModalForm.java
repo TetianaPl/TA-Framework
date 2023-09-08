@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +21,7 @@ public class EmailYourEstimateModalForm extends PageModel {
         highlightElement(driver, emailField);
         emailField.click();
         emailField.sendKeys(emailAddress);
-        logger.trace("The email address " + emailAddress + " is filled in the Email field on the 'Email Your Estimate' form.");
+        logger.info("The email address " + emailAddress + " is filled in the Email field on the 'Email Your Estimate' form.");
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -30,7 +31,8 @@ public class EmailYourEstimateModalForm extends PageModel {
 
     public void clickSendEmailButton() {
         highlightElement(driver, sendEmailButton);
-        sendEmailButton.click();
-        logger.trace("The 'Email Your Estimate' form submitted.");
+        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
+        jsExec.executeScript("arguments[0].click();", sendEmailButton);
+        logger.info("The 'Email Your Estimate' form submitted.");
     }
 }
