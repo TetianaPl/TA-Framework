@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-public class ReadResult {
+public class ReadCalculationResult {
     public static double readResult(WebDriver driver, String source) {
         if (source.equals("email")) {
             JavascriptExecutor jsExec = (JavascriptExecutor) driver;

@@ -1,10 +1,10 @@
 package pages;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static tests.TestSetup.logger;
 import static utils.HighlightElement.highlightElement;
 
 public class EmailYourEstimateModalForm extends PageModel {
@@ -31,7 +31,6 @@ public class EmailYourEstimateModalForm extends PageModel {
 
     public void clickSendEmailButton() {
         highlightElement(driver, sendEmailButton);
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", sendEmailButton);
         logger.info("The 'Email Your Estimate' form submitted.");
     }

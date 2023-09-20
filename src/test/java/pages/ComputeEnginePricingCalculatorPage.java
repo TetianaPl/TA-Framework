@@ -1,14 +1,16 @@
 package pages;
 
-import model.ComputeEnginePricingCalculator;
+import modelBuilder.ComputeEnginePricingCalculator;
+import modelBuilder.ComputeEnginePricingCalculatorBuilder;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utils.decorator.HighlightingDecorator;
+import utils.decorator.SelectDropdownItem;
 
+import static tests.TestSetup.logger;
 import static utils.HighlightElement.highlightElement;
-import static utils.SelectDropdownItem.selectItem;
 
 public class ComputeEnginePricingCalculatorPage extends PageModel {
     @FindBy(xpath = "//md-tabs-wrapper/md-tabs-canvas")
@@ -102,34 +104,31 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
     }
 
     public void setOperatingSystemAndSoftware(String operatingSystem) {
-        operatingSystemAndSoftware.click();
-        selectItem(driver, operatingSystem);
+        jsExec.executeScript("arguments[0].click();", operatingSystemAndSoftware);
+        new HighlightingDecorator(new SelectDropdownItem()).selectItem(driver, operatingSystem);
         logger.info("Operating System / Software: " + operatingSystem + ".");
     }
 
     public void setProvisioningModel(String VMClass) {
-        provisioningModel.click();
-        selectItem(driver, VMClass);
+        jsExec.executeScript("arguments[0].click();", provisioningModel);
+        new HighlightingDecorator(new SelectDropdownItem()).selectItem(driver, VMClass);
         logger.info("Provisioning model: " + VMClass + ".");
     }
 
     public void setSeries(String seria) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", series);
-        selectItem(driver, seria);
+        new HighlightingDecorator(new SelectDropdownItem()).selectItem(driver, seria);
         logger.info("Series: " + seria + ".");
     }
 
     public void setMachineType(String instanceType) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", machineType);
-        selectItem(driver, instanceType);
+        new HighlightingDecorator(new SelectDropdownItem()).selectItem(driver, instanceType);
         logger.info("Machine type: " + instanceType + ".");
     }
 
     public void setAddGPUs(boolean checked) {
         if (checked && !getAddGPUs() || !checked && getAddGPUs()) {
-            JavascriptExecutor jsExec = (JavascriptExecutor) driver;
             jsExec.executeScript("arguments[0].scrollIntoView(false);", addGPUs);
             jsExec.executeScript("window.scrollTo(0, 500)");
             jsExec.executeScript("arguments[0].click();", addGPUs);
@@ -139,14 +138,12 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
     }
 
     public void setGPUType(String type) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", GPUType);
-        selectItem(driver, type);
+        new HighlightingDecorator(new SelectDropdownItem()).selectItem(driver, type);
         logger.info("GPU type: " + type + ".");
     }
 
     public void setNumberOfGPUs(int number) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", numberOfGPUs);
         WebElement element = numberOfGPUs.findElement(By.xpath("//md-option[@ng-repeat='item in listingCtrl.supportedGpuNumbers[listingCtrl.computeServer.gpuType]'][@value = '" + number + "']"));
         highlightElement(driver, element);
@@ -155,41 +152,52 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
     }
 
     public void setLocalSSD(String ssd) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", localSSD);
-        selectItem(driver, ssd);
+        new HighlightingDecorator(new SelectDropdownItem()).selectItem(driver, ssd);
         logger.info("Local SSD: " + ssd + ".");
     }
 
     public void setDatacenterLocation(String location) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("window.scrollTo(0, 500)");
-        datacenterLocation.click();
-        selectItem(driver, location);
+        jsExec.executeScript("arguments[0].click();", datacenterLocation);
+        WebElement element = driver.findElement(By.xpath("//md-option[@ng-repeat='item in listingCtrl.fullRegionList | filter:listingCtrl.inputRegionText.computeServer']/div[contains(text(), '" + location + "')]"));
+        highlightElement(driver, element);
+        jsExec.executeScript("arguments[0].click();", element);
         logger.info("Datacenter location: " + location + ".");
     }
 
     public void setCommittedUsage(String duration) {
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].scrollIntoView();", committedUsage);
         jsExec.executeScript("window.scrollTo(0, 500)");
         jsExec.executeScript("arguments[0].click();", committedUsage);
-        selectItem(driver, duration);
+        WebElement element = driver.findElement(By.xpath("//div[@class='md-select-menu-container md-active md-clickable']//div[contains(text(), '" + duration + "')]"));
+        highlightElement(driver, element);
+        jsExec.executeScript("arguments[0].click();", element);
         logger.info("Committed usage: " + duration + ".");
     }
 
     public ComputeEnginePricingCalculator clickAddToEstimate() {
-        ComputeEnginePricingCalculator form = new ComputeEnginePricingCalculator(this);
+        ComputeEnginePricingCalculator form = new ComputeEnginePricingCalculatorBuilder()
+                .setNumberOfInstances(this.getNumberOfInstances())
+                .setOperatingSystemAndSoftware(this.getOperatingSystemAndSoftware())
+                .setProvisioningModel(this.getProvisioningModel())
+                .setSeries(this.getSeries())
+                .setMachineType(this.getMachineType())
+                .setAddGPUs(this.getAddGPUs())
+                .setCPUType(this.getGPUType())
+                .setNumberOfGPUs(this.getNumberOfGPUs())
+                .setLocalSSD(this.getLocalSSD())
+                .setDatacenterLocation(this.getDatacenterLocation())
+                .setCommittedUsage(this.getCommittedUsage())
+                .createComputeEnginePricingCalculator();
         highlightElement(driver, addToEstimate);
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", addToEstimate);
-        logger.info("The form has been completed and submitted for estimation.");
+        logger.info("The calculator form has been completed with the following data and submitted for estimation:\n" + form);
         return form;
     }
 
     public EmailYourEstimateModalForm clickEmailEstimate() {
         highlightElement(driver, emailButton);
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", emailButton);
         logger.info("Request to send a result by email has been submitted.");
         return new EmailYourEstimateModalForm(driver);

@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
+import static tests.TestSetup.logger;
 import static utils.HighlightElement.highlightElement;
 
 public class CloudGooglePage extends PageModel {
@@ -34,7 +35,6 @@ public class CloudGooglePage extends PageModel {
         WebElement element = searchResults.findElement(By.xpath("//div[@class='gsc-thumbnail-inside']//a[@class='gs-title']/b[text()= '" + text + "']"));
         logger.info("Followed the link found: " + element.getText());
         highlightElement(driver, element);
-        JavascriptExecutor jsExec = (JavascriptExecutor) driver;
         jsExec.executeScript("arguments[0].click();", element);
     }
 }

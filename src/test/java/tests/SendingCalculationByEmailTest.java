@@ -9,7 +9,7 @@ import pages.EmailYourEstimateModalForm;
 
 import static org.testng.Assert.assertEquals;
 import static utils.CreatingEmailAddress.createEmailAddress;
-import static utils.ReadResult.readResult;
+import static utils.ReadCalculationResult.readResult;
 import static utils.SendCalculation.sendCalculation;
 import static utils.SwitchToNestedFrame.switchToNestedFrame;
 import static utils.SwitchToNewWindow.openAndSwitchToNewWindow;

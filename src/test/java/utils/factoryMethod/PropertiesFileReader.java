@@ -1,14 +1,14 @@
-package utils;
+package utils.factoryMethod;
 
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertiesReader {
+public class PropertiesFileReader implements Reader {
     public static Properties properties;
 
     static {
         properties = new Properties();
-        InputStream inputStream = PropertiesReader.class.getResourceAsStream("/config.properties");
+        InputStream inputStream = PropertiesFileReader.class.getResourceAsStream("/config.properties");
         try {
             properties.load(inputStream);
         } catch (Exception e) {
@@ -16,7 +16,7 @@ public class PropertiesReader {
         }
     }
 
-    public static String get(String propertyName) {
-        return PropertiesReader.properties.getProperty(propertyName);
+    public String getData(String propertyName) {
+        return properties.getProperty(propertyName);
     }
 }
