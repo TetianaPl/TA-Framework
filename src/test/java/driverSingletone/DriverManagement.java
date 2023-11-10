@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
 
-import static tests.TestSetup.reader;
+//import static tests.TestSetup.reader;
 
 public class DriverManagement {
     private static WebDriver driver = null;
@@ -12,9 +12,8 @@ public class DriverManagement {
     public DriverManagement() {
     }
 
-    public static WebDriver getDriver() {
+    public static WebDriver getDriver(String browserName) {
         if (driver == null) {
-            String browserName = reader.getData("browser");
             WebDriverCreator webDriverCreator;
             switch (browserName) {
                 case "chrome":

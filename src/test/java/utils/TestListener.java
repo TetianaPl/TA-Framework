@@ -1,6 +1,5 @@
 package utils;
 
-import driverSingletone.DriverManagement;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +13,8 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static tests.TestSetup.driver;
+
 public class TestListener implements ITestListener {
     private final Logger logger = LogManager.getRootLogger();
 
@@ -23,9 +24,7 @@ public class TestListener implements ITestListener {
     }
 
     private void saveScreenshot() {
-        File screenCapture = ((TakesScreenshot) DriverManagement
-                .getDriver())
-                .getScreenshotAs(OutputType.FILE);
+        File screenCapture = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             String pathName = ".//target/screenshots/"
                     + getCurrentTimeAsString() + ".png";

@@ -1,6 +1,9 @@
 package pages;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
@@ -29,6 +32,10 @@ public class CloudGooglePage extends PageModel {
         Actions actions = new Actions(driver);
         actions.keyDown(Keys.ENTER).click().build().perform();
         logger.info("Search  by " + searchQuery + " started.");
+
+        if (driver.getCurrentUrl().equals("https://cloud.google.com/support-hub")){
+            driver.navigate().back();
+        }
     }
 
     public void findInSearchResults(String text) {

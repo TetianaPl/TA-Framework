@@ -170,7 +170,8 @@ public class ComputeEnginePricingCalculatorPage extends PageModel {
         jsExec.executeScript("arguments[0].scrollIntoView();", committedUsage);
         jsExec.executeScript("window.scrollTo(0, 500)");
         jsExec.executeScript("arguments[0].click();", committedUsage);
-        WebElement element = driver.findElement(By.xpath("//div[@class='md-select-menu-container md-active md-clickable']//div[contains(text(), '" + duration + "')]"));
+        WebElement element = driver.findElement(By.xpath("//*[@class='md-input-has-placeholder flex md-input-has-value']//div[contains(text(), '" + duration + "')]"));
+//        WebElement element = driver.findElement(By.xpath("//div[@class='md-select-menu-container md-active md-clickable']//div[contains(text(), '" + duration + "')]"));
         highlightElement(driver, element);
         jsExec.executeScript("arguments[0].click();", element);
         logger.info("Committed usage: " + duration + ".");
