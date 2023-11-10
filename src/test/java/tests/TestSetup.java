@@ -22,24 +22,5 @@ public abstract class TestSetup {
     public static WebDriver driver;
     protected static Wait<WebDriver> wait;
     public static Logger logger = LogManager.getRootLogger();
-////    private static ReaderType readerType = ReaderType.COMMAND_LINE;
-////    private static final ReaderType readerType = ReaderType.PROPERTIES_FILE;
-////    public static Reader reader;
-//
-//    @BeforeSuite
-////    public void testSetup() {
-//////        reader = new ReaderFactory().getReader(readerType);
-////        driver = DriverManagement.getDriver();
-////        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-////    }
-//
-//    @AfterMethod
-//    public void cleanUp() {
-//        driver.manage().deleteAllCookies();
-//    }
-//
-//    @AfterClass
-//    public void tearDown() {
-//        DriverManagement.closeDriver();
-//    }
+
 }
